@@ -1,12 +1,10 @@
 ## garage
 
-S3 хранилище (garage)[https://git.deuxfleurs.fr/Deuxfleurs/garage] с web-ui
+S3 хранилище [garage](https://git.deuxfleurs.fr/Deuxfleurs/garage) с [web-ui](https://github.com/khairul169/garage-webui)
 
 ## Ссылки
 
-- Official https://garagehq.deuxfleurs.fr/ 
-- Repo https://git.deuxfleurs.fr/Deuxfleurs/garage
-- Web UI https://github.com/khairul169/garage-webui
+- Web UI http://localhost:3909
 
 
 ## How to run
@@ -39,4 +37,22 @@ Check bucket exists:
 
 ```sh
 docker exec garage /garage bucket list
+```
+
+Create key:
+
+```sh
+docker exec garage /garage key create test-app-key
+```
+
+Check key created:
+
+```sh
+docker exec garage /garage key list
+```
+
+Grant permissions on bucket:
+
+```sh
+docker exec garage /garage bucket allow --read --write --owner test-bucket --key test-app-key
 ```
