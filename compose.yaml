@@ -1,0 +1,30 @@
+services:
+  garage:
+    image: dxflrs/garage:v2.2.0
+    container_name: garage
+    ports:
+      - 3900:3900
+      - 3901:3901
+      - 3902:3902
+      - 3903:3903
+    volumes:
+      - ./garage.toml:/etc/garage.toml:ro
+      - ./data/garage/data:/var/lib/garage/data
+      - ./data/garage/meta:/var/lib/garage/meta
+    restart: unless-stopped
+  
+  garage-webui:
+    image: khairul169/garage-webui:latest
+    container_name: garage-webui
+    depends_on:
+      - garage
+    ports:
+      - "3909:3909"
+    volumes:
+     - ./garage.toml:/etc/garage.toml:ro
+    environment:
+      API_BASE_URL: "http://garage:3903"
+      S3_ENDPOINT_URL: "http://garage:3900"
+      # Опционально: аутентификация
+      # AUTH_USER_PASS: "admin:$2y$10$xxxxx"  # bcrypt hash
+    restart: unless-stopped
